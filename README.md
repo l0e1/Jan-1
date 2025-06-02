@@ -1,7 +1,7 @@
 # Jan-1: Hear the Math.
 
-*Created by Ale Mustafa* 
-"Mathematics is like a music of reason, you just have to hear it." Inspired by Niels Bohr.
+*Created by Ale Mustafa* ......
+>>>>>"Mathematics is like a music of reason, you just have to hear it." Inspired by>>> Niels Bohr!.
 
 ## Overview :)
 
