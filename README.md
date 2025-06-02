@@ -1,49 +1,51 @@
-# Jan-1
+##Jan-1: Hear the Math
 
-*Created by Ale Mustafa*  
-"Mathematics is like a music of reason, you just have to hear it."
-"Inspired by Niels Bohr"
-:)
-## About
+*Created by Ale Mustafa* 
+"Mathematics is like a music of reason, you just have to hear it." Inspired by Niels Bohr.
 
-**Jan-1** is a project that shows math can be experienced with both the eyes and ears, users can type in math functions, see their graphs, and hear sound waves that reflect those functions.
-This project was created to make math more interactive and meaningful, especially for students who want to connect creativity with logic.
+# Overview :)
 
-## What are the features?
+**Jan-1** is an interactive educational project that explores the connection between mathematics, sound, and biology. Users can input mathematical functions to see their graphs and hear their corresponding audio patterns. The project also visualizes mathematical structures found in natural forms such as leaves and DNA.
 
-- Enter any math function (e.g., `sin(x)`, `x^2`, `|x^3|`).
-- See the graph using (Plotly.js) .
-- Hear a matching tone for each function.
-- Styled with neon green text on black background.
+# Features:
+- Live graph plotting of user-defined functions (i.e: sin(x), x^2, tan(x), |x^3|, etc)
+- Dynamic sound playback linked to the mathematical behavior of the function.
+- Two interactive visualizations:
+  - **Figure 1: Leaf Structure**/Users can click nodes on a stylized leaf to view biological math patterns.
+  - **Figure 2: DNA Spiral**/Clickable DNA points reveal functions based on real molecular symmetry and helices.
 
-## Sounds:
--Sine:  [sine-440hz.mp3](https://cdn.jsdelivr.net/gh/jackw01/sine-wave-tone/sine-440hz.mp3) 
--Cosine: [sine-880hz.mp3](https://cdn.jsdelivr.net/gh/jackw01/sine-wave-tone/sine-880hz.mp3) 
--Tangent:[square-440hz.mp3](https://cdn.jsdelivr.net/gh/jackw01/sine-wave-tone/square-440hz.mp3) 
--x²:  [sine-220hz.mp3](https://cdn.jsdelivr.net/gh/jackw01/sine-wave-tone/sine-220hz.mp3) 
--Others: [sine-330hz.mp3](https://cdn.jsdelivr.net/gh/jackw01/sine-wave-tone/sine-330hz.mp3) 
+# Technologies and tools that are used:
+- HTML, CSS, and JavaScript
+- [math.js](https://mathjs.org/), for evaluating mathematical expressions
+- [Plotly.js](https://plotly.com/javascript/), for graph plotting
+- Open-source tone (.mp3) files served via [jsDelivr](https://www.jsdelivr.com/)
+- Hosted using GitHub Pages.
 
-.These are public MP3s from a (GitHub CDN). 
-.They play directly in the browser.
+# How to Use :/ ??
 
-## How to Use it?
+1. Visit the hosted web page (through the link which is available below).
+2. Enter any valid mathematical expression like: cos(x)..etc.
+3. Click (Plot & Play) to see the graph and hear a corresponding tone.
+4. Explore the interactive leaf and DNA diagrams by clicking on marked points to reveal underlying equations.
 
-1. Open (index.html) in your browser.
-2. Type any math function like: (sin(x)).
-3. Click **"Plot Graph"** to draw the function anddddd
-4. Click **"Play Sound"** to hear the sound of mathematics!
+# Mathematics in Biology:
 
-## Technologies that are used:
+- **Figure 1: Leaf**/ Demonstrates symmetry, parabolic curves, and vein structures that relate to real plant growth models.
+- **Figure 2: DNA**/ Simulates the helical structure of DNA using sine functions and parametric curves.
 
-- **HTML**: for structure.  
-- **CSS**: for visual design.  
-- **JavaScript**: for interactivity.  
-- **Math.js**: to evaluate math expressions ([https://mathjs.org/](https://mathjs.org/)).
-- **Plotly.js**: to draw interactive graphs ([https://plotly.com/javascript/](https://plotly.com/javascript/)).  
-- **MP3s**: hosted via jsDelivr CDN ([https://www.jsdelivr.com/](https://www.jsdelivr.com/)).
+^^Please do note that these visuals are not literal replications, but stylized mathematical interpretations that reflect genuine biological forms.^^
+# Live Deployment:
+[View the Project Online](https://l0el.github.io/Jan-1/)  
 
-## License
+# License:
 
-Free to use for educational and creative projects.
+This project is released under the ((MIT License)).
+
+# Author (Me):
+--Ale Mustafa-- 
+A mathematics enthusiast exploring how abstract equations can be visualized and heard, in this project I am inspired by the structures of the natural world.
+I have created this project as a  senior's year project in High School.
+
+
 
 >>Thanks for being here<<.
