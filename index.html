@@ -1,26 +1,32 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>Jan-1: Math & Sound</title>
   <meta charset="UTF-8" />
+  <title>Jan-1: Math & Sound</title>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjs/11.11.0/math.min.js"></script>
   <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
   <style>
     body {
       background-color: black;
       color: #39ff14;
-      font-family: 'Segoe UI', sans-serif;
+      font-family: 'Courier New', Courier, monospace;
       padding: 20px;
     }
-    input, button {
-      font-size: 16px;
-      padding: 6px;
-      margin: 5px 0;
-      background-color: #111;
-      color: #39ff14;
+    button, input {
+      background-color: black;
       border: 1px solid #39ff14;
+      color: #39ff14;
+      padding: 8px;
+      font-size: 16px;
+      margin: 5px;
+    }
+    button:hover {
+      background-color: #39ff14;
+      color: black;
     }
     #graph {
+      width: 600px;
+      height: 400px;
       margin-top: 20px;
     }
   </style>
@@ -30,53 +36,66 @@
   <h1>Jan-1: Hear the Math</h1>
   <p><strong>Created by Ale Mustafa</strong></p>
   <p><em>"Mathematics is like a music of reason — you just have to hear it."</em><br>– (Inspired by Niels Bohr)</p>
-  <p>This project was created because math can be heard, not just seen. Jan-1 lets you feel it both ways.</p>
 
   <hr>
 
-  <p><strong>Type a function like:</strong> <code>sin(x)</code>, <code>cos(x)</code>, <code>x^2</code>, <code>|x|</code></p>
+  <p><strong>Type a function:</strong> <code>sin(x)</code>, <code>cos(x)</code>, <code>tan(x)</code>, <code>x^2</code>, etc.</p>
 
   <input id="funcInput" type="text" value="sin(x)" />
-  <button onclick="plotGraph()">📈 Plot Graph</button>
-  <button onclick="playSound()">🔊 Play Sound</button>
+  <button onclick="plotAndPlay()">Plot & Play</button>
 
-  <div id="graph" style="width:600px; height:400px;"></div>
-
-  <p><strong>Note:</strong> MP3 files must be in the same folder as this HTML file.</p>
+  <div id="graph"></div>
 
   <script>
-    function plotGraph() {
-      const expr = document.getElementById('funcInput').value;
+    function plotAndPlay() {
+      const expr = document.getElementById('funcInput').value.toLowerCase();
       const x = [], y = [];
-      for(let i = -10; i <= 10; i += 0.1) {
+      for (let i = -10; i <= 10; i += 0.1) {
         x.push(i);
         try {
-          y.push(math.evaluate(expr, {x: i}));
+          y.push(math.evaluate(expr, { x: i }));
         } catch {
           y.push(null);
         }
       }
-      Plotly.newPlot('graph', [{x:x, y:y, mode:'lines', name:expr}], {
+
+      Plotly.newPlot('graph', [{
+        x: x,
+        y: y,
+        mode: 'lines',
+        name: expr
+      }], {
         title: 'y = ' + expr,
-        paper_bgcolor: 'black',
         plot_bgcolor: 'black',
+        paper_bgcolor: 'black',
         font: { color: '#39ff14' }
       });
+
+      playSoundFor(expr);
     }
 
-    function playSound() {
-      const f = document.getElementById('funcInput').value.toLowerCase();
-      let file = 'default.mp3';
+    function playSoundFor(func) {
+      let url = '';
 
-      if (f.includes('sin')) file = 'sin.mp3';
-      else if (f.includes('cos')) file = 'cos.mp3';
-      else if (f.includes('tan')) file = 'tan.mp3';
-      else if (f.includes('^2')) file = 'x2.mp3';
+      if (func.includes('sin')) {
+        url = 'https://cdn.jsdelivr.net/gh/jackw01/sine-wave-tone/sine-440hz.mp3';
+      } else if (func.includes('cos')) {
+        url = 'https://cdn.jsdelivr.net/gh/jackw01/sine-wave-tone/sine-880hz.mp3';
+      } else if (func.includes('tan')) {
+        url = 'https://cdn.jsdelivr.net/gh/jackw01/sine-wave-tone/square-440hz.mp3';
+      } else if (func.includes('^2')) {
+        url = 'https://cdn.jsdelivr.net/gh/jackw01/sine-wave-tone/sine-220hz.mp3';
+      } else {
+        url = 'https://cdn.jsdelivr.net/gh/jackw01/sine-wave-tone/sine-330hz.mp3';
+      }
 
-      const audio = new Audio(file);
-      audio.play().catch(() => alert("Browser blocked autoplay. Click again or allow sound."));
+      const audio = new Audio(url);
+      audio.play().catch(() => {
+        alert("Browser blocked autoplay. Click again or allow sound.");
+      });
     }
   </script>
 
 </body>
 </html>
+
