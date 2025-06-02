@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Jan-1: Math & Sound</title>
+  <title>Jan-1</title>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjs/11.11.0/math.min.js"></script>
   <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
   <style>
@@ -29,6 +29,32 @@
       height: 400px;
       margin-top: 20px;
     }
+    .fig-section {
+      margin-top: 60px;
+    }
+    .bio-image {
+      max-width: 600px;
+      width: 100%;
+      position: relative;
+    }
+    .dot {
+      position: absolute;
+      width: 14px;
+      height: 14px;
+      background-color: #39ff14;
+      border-radius: 50%;
+      cursor: pointer;
+      border: 2px solid black;
+    }
+    .formula-box {
+      display: none;
+      position: absolute;
+      background: black;
+      color: #39ff14;
+      border: 1px solid #39ff14;
+      padding: 4px;
+      font-size: 14px;
+    }
   </style>
 </head>
 <body>
@@ -45,6 +71,25 @@
   <button onclick="plotAndPlay()">Plot & Play</button>
 
   <div id="graph"></div>
+
+  <!-- Biology Section -->
+  <div class="fig-section">
+    <h2>Mathematics in Biology – Fig 1: Leaf Structure</h2>
+    <div style="position:relative;">
+      <img src="leaf-diagram.jpg" alt="Leaf with math points" class="bio-image">
+      <div class="dot" style="top:40px; left:100px;" onclick="toggleFormula(this, 'Golden Ratio: (1 + √5) / 2')"></div>
+      <div class="dot" style="top:80px; left:200px;" onclick="toggleFormula(this, 'Parabola: y = ax²')"></div>
+    </div>
+  </div>
+
+  <div class="fig-section">
+    <h2>Mathematics in Biology – Fig 2: DNA Structure</h2>
+    <div style="position:relative;">
+      <img src="dna-diagram.jpg" alt="DNA with math points" class="bio-image">
+      <div class="dot" style="top:60px; left:120px;" onclick="toggleFormula(this, 'Helix: x = cos(t), y = sin(t), z = t')"></div>
+      <div class="dot" style="top:150px; left:220px;" onclick="toggleFormula(this, 'Exponential: y = e^x')"></div>
+    </div>
+  </div>
 
   <script>
     function plotAndPlay() {
@@ -94,8 +139,20 @@
         alert("Browser blocked autoplay. Click again or allow sound.");
       });
     }
+
+    function toggleFormula(dot, formula) {
+      let box = dot.nextElementSibling;
+      if (!box || !box.classList.contains('formula-box')) {
+        box = document.createElement('div');
+        box.className = 'formula-box';
+        box.innerText = formula;
+        dot.parentNode.insertBefore(box, dot.nextSibling);
+        box.style.top = (dot.offsetTop + 20) + 'px';
+        box.style.left = (dot.offsetLeft + 20) + 'px';
+      }
+      box.style.display = (box.style.display === 'none' || box.style.display === '') ? 'block' : 'none';
+    }
   </script>
 
 </body>
 </html>
-
