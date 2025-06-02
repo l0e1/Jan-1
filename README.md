@@ -1,38 +1,29 @@
 # Jan-1: Hear The Math.
 
-*Created by Ale Mustafa*
+*Created by Ale Mustafa.
+:) :) :) 
+> "Mathematics is like a music of reason — you just have to hear it." – Inspired by Niels Bohr
 
-This is a minimalist web project showing how **mathematics can be both seen and heard**. It allows users to:
+**Jan-1** is an interactive website demonstrating the connection between mathematics, sound, and biology.
 
-- Input any mathematical function and see it graphed live.
-- Hear sounds mapped to functions such as: sin(x) plays a sine wave tone.
-- Explore the presence of math in biology via two interactive visual graphs:
-  
-  - Fig 1: Leaf patterns
-  - Fig 2: DNA spiral
+## Features
+- Graph your own math functions and hear their sound.
+- 
+- Explore biological forms (leaf, DNA) plotted using real math equations.
+- 
+- Each biological figure reveals its equation and logic.
 
-## How It Works? :/
-- (Plotly) is used for graph visualization.
-- (Math.js) handles the function parsing.
-- (MP3) tones are triggered dynamically via (JavaScript) and (<audio>).
-- All assets are hosted via (CDN).
+## Technologies/tools that are used here:
+- HTML, CSS, JavaScript.
+- ((Plotly.js)) for graphs.
+- ((math.js)) for evaluating functions.
+- Audio playback with simple MP3 triggers.
 
-## Try It Online!
+## Hosting? 
+Host directly using GitHub Pages, see the GitHub deployment guide for setup!
+## Licence:
+This project is presented under the MIT licence.
+## LINK:
+Jan-1 is availabe at:[[https://l0e1.github.io/Jan-1/]] hosted by GitHub. 
 
-
-
-
-## License?
-
-MIT License – feel free to use/expand it.
-
-
-
-## Author (Me):
---Ale Mustafa-- 
-An enthusiast exploring how abstract equations can be visualized and heard, in this project I am inspired by the structures of the natural world.
-I have created this project as my senior's year project in High School.
-
-
-
->>Thanks for being here<<.
+> Thanks for reaching this tiny dot(.) 
