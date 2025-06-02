@@ -15,23 +15,23 @@
     h1, h2 {
       color: #39ff14;
     }
-    button, input {
+    input, button {
       background-color: black;
       border: 1px solid #39ff14;
       color: #39ff14;
       padding: 8px;
-      font-size: 16px;
       margin: 5px;
+      font-size: 16px;
     }
     button:hover {
       background-color: #39ff14;
       color: black;
     }
-    .graph-container {
-      margin-top: 40px;
-    }
-    .graph-box {
-      margin-top: 20px;
+    .graph {
+      margin-top: 30px;
+      width: 100%;
+      max-width: 700px;
+      height: 450px;
     }
   </style>
 </head>
@@ -39,24 +39,22 @@
 
   <h1>Jan-1: Hear the Math</h1>
   <p><strong>Created by Ale Mustafa</strong></p>
-  <p><em>"Mathematics is like a music of reason, you just have to hear it!"</em><br>– (Niels Bohr)</p>
+  <p><em>"Mathematics is like a music of reason — you just have to hear it."</em><br>– Inspired by Niels Bohr</p>
+  <p>This project explores the deep connection between mathematics and sound, allowing users to hear and see mathematical beauty in real-world patterns.</p>
 
   <hr>
 
-  <p><strong>Type a function:</strong> <code>sin(x)</code>, <code>cos(x)</code>, <code>tan(x)</code>, <code>x^2</code>, etc.</p>
-
+  <h2>User Function Graph</h2>
+  <p>Type a function (e.g., <code>sin(x)</code>, <code>cos(x)</code>, <code>x^2</code>, etc.):</p>
   <input id="funcInput" type="text" value="sin(x)" />
   <button onclick="plotAndPlay()">Plot & Play</button>
+  <div id="userGraph" class="graph"></div>
 
-  <div id="graph" class="graph-box"></div>
+  <h2>Mathematics in Biology – Fig. 1: Leaf Structure</h2>
+  <div id="leafGraph" class="graph"></div>
 
-  <div class="graph-container">
-    <h2>Mathematics in Biology - Fig 1: Leaf</h2>
-    <div id="leafGraph" class="graph-box"></div>
-
-    <h2>Mathematics in Biology - Fig 2: DNA Spiral</h2>
-    <div id="dnaGraph" class="graph-box"></div>
-  </div>
+  <h2>Mathematics in Biology – Fig. 2: DNA Helix</h2>
+  <div id="dnaGraph" class="graph"></div>
 
   <script>
     function plotAndPlay() {
@@ -71,7 +69,7 @@
         }
       }
 
-      Plotly.newPlot('graph', [{
+      Plotly.newPlot('userGraph', [{
         x: x,
         y: y,
         mode: 'lines',
@@ -86,73 +84,85 @@
       playSoundFor(expr);
     }
 
-    function playSoundFor(func) {
+    function playSoundFor(expr) {
       let url = '';
-
-      if (func.includes('sin')) {
-        url = 'https://cdn.jsdelivr.net/gh/jackw01/sine-wave-tone/sine-440hz.mp3';
-      } else if (func.includes('cos')) {
-        url = 'https://cdn.jsdelivr.net/gh/jackw01/sine-wave-tone/sine-880hz.mp3';
-      } else if (func.includes('tan')) {
-        url = 'https://cdn.jsdelivr.net/gh/jackw01/sine-wave-tone/square-440hz.mp3';
-      } else if (func.includes('^2')) {
-        url = 'https://cdn.jsdelivr.net/gh/jackw01/sine-wave-tone/sine-220hz.mp3';
-      } else {
-        url = 'https://cdn.jsdelivr.net/gh/jackw01/sine-wave-tone/sine-330hz.mp3';
-      }
+      if (expr.includes('sin')) url = 'https://cdn.jsdelivr.net/gh/jackw01/sine-wave-tone/sine-440hz.mp3';
+      else if (expr.includes('cos')) url = 'https://cdn.jsdelivr.net/gh/jackw01/sine-wave-tone/sine-880hz.mp3';
+      else if (expr.includes('tan')) url = 'https://cdn.jsdelivr.net/gh/jackw01/sine-wave-tone/square-440hz.mp3';
+      else if (expr.includes('^2')) url = 'https://cdn.jsdelivr.net/gh/jackw01/sine-wave-tone/sine-220hz.mp3';
+      else url = 'https://cdn.jsdelivr.net/gh/jackw01/sine-wave-tone/sine-330hz.mp3';
 
       const audio = new Audio(url);
       audio.play().catch(() => {
-        alert("Browser blocked autoplay. Click again or allow sound.");
+        alert("Autoplay blocked. Click again or allow sound permissions.");
       });
     }
 
-    // Biology Fig 1: Leaf Structure
-    const leafX = [1, 2, 3, 4, 5];
-    const leafY = [1, 4, 2, 5, 3];
-    Plotly.newPlot('leafGraph', [{
-      x: leafX,
-      y: leafY,
-      mode: 'markers',
-      type: 'scatter',
-      text: [
-        'Stomatal pattern → sin(x)',
-        'Vein curve → x^2',
-        'Tip curvature → tan(x)',
-        'Growth edge → |x|',
-        'Sunlight response → cos(x)'
-      ],
-      hoverinfo: 'text',
-      marker: { size: 12, color: '#39ff14' }
-    }], {
-      title: 'Leaf Patterns as Functions',
-      plot_bgcolor: 'black',
-      paper_bgcolor: 'black',
-      font: { color: '#39ff14' }
-    });
+    function plotLeaf() {
+      const theta = [];
+      const r = [];
+      for (let i = 0; i <= Math.PI; i += 0.01) {
+        theta.push(i);
+        r.push(1 - Math.sin(i)); // Classic leaf shape in polar coords
+      }
 
-    // Biology Fig 2: DNA Double Helix (simplified)
-    const dnaTheta = [];
-    const dnaX = [], dnaY = [];
-    for (let t = 0; t < 12.6; t += 0.1) {
-      dnaTheta.push(t);
-      dnaX.push(Math.cos(t));
-      dnaY.push(Math.sin(t) + t * 0.05);
+      const x = r.map((val, i) => val * Math.cos(theta[i]));
+      const y = r.map((val, i) => val * Math.sin(theta[i]));
+
+      Plotly.newPlot('leafGraph', [{
+        x: x,
+        y: y,
+        mode: 'markers',
+        type: 'scatter',
+        text: theta.map(t => `Equation: r = 1 - sin(θ) at θ = ${t.toFixed(2)}`),
+        hoverinfo: 'text',
+        marker: { color: '#39ff14' }
+      }], {
+        title: 'Leaf Shape (Polar Equation)',
+        plot_bgcolor: 'black',
+        paper_bgcolor: 'black',
+        font: { color: '#39ff14' }
+      });
     }
 
-    Plotly.newPlot('dnaGraph', [{
-      x: dnaX,
-      y: dnaY,
-      mode: 'lines',
-      name: 'DNA Spiral',
-      line: { color: '#39ff14' }
-    }], {
-      title: 'DNA Spiral Path',
-      plot_bgcolor: 'black',
-      paper_bgcolor: 'black',
-      font: { color: '#39ff14' }
-    });
+    function plotDNA() {
+      const t = [];
+      const x = [], y = [], z = [];
+      for (let i = 0; i <= 10 * Math.PI; i += 0.1) {
+        t.push(i);
+        x.push(Math.sin(i));
+        y.push(Math.cos(i));
+        z.push(i);
+      }
+
+      Plotly.newPlot('dnaGraph', [{
+        x: x,
+        y: y,
+        z: z,
+        mode: 'lines',
+        type: 'scatter3d',
+        line: { color: '#39ff14' },
+        name: 'DNA Strand',
+        hoverinfo: 'text',
+        text: t.map(val => `x=sin(t), y=cos(t), z=t at t=${val.toFixed(2)}`)
+      }], {
+        title: 'DNA Double Helix (Parametric)',
+        scene: {
+          xaxis: { color: '#39ff14' },
+          yaxis: { color: '#39ff14' },
+          zaxis: { color: '#39ff14' },
+          bgcolor: 'black'
+        },
+        paper_bgcolor: 'black',
+        font: { color: '#39ff14' }
+      });
+    }
+
+    plotLeaf();
+    plotDNA();
   </script>
 
 </body>
 </html>
+
+   
