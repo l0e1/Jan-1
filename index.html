@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <title>Jan-1</title>
+  <meta charset="UTF-8">
+  <title>Jan-1: Math & Sound</title>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjs/11.11.0/math.min.js"></script>
   <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
   <style>
@@ -11,6 +11,9 @@
       color: #39ff14;
       font-family: 'Courier New', Courier, monospace;
       padding: 20px;
+    }
+    h1, h2 {
+      color: #39ff14;
     }
     button, input {
       background-color: black;
@@ -24,36 +27,8 @@
       background-color: #39ff14;
       color: black;
     }
-    #graph {
-      width: 600px;
-      height: 400px;
+    .graph-box {
       margin-top: 20px;
-    }
-    .fig-section {
-      margin-top: 60px;
-    }
-    .bio-image {
-      max-width: 600px;
-      width: 100%;
-      position: relative;
-    }
-    .dot {
-      position: absolute;
-      width: 14px;
-      height: 14px;
-      background-color: #39ff14;
-      border-radius: 50%;
-      cursor: pointer;
-      border: 2px solid black;
-    }
-    .formula-box {
-      display: none;
-      position: absolute;
-      background: black;
-      color: #39ff14;
-      border: 1px solid #39ff14;
-      padding: 4px;
-      font-size: 14px;
     }
   </style>
 </head>
@@ -62,6 +37,7 @@
   <h1>Jan-1: Hear the Math</h1>
   <p><strong>Created by Ale Mustafa</strong></p>
   <p><em>"Mathematics is like a music of reason — you just have to hear it."</em><br>– (Inspired by Niels Bohr)</p>
+  <p>This project was created because math can be heard, not just seen. Jan-1 lets you feel it both ways.</p>
 
   <hr>
 
@@ -70,28 +46,16 @@
   <input id="funcInput" type="text" value="sin(x)" />
   <button onclick="plotAndPlay()">Plot & Play</button>
 
-  <div id="graph"></div>
+  <div id="graph" class="graph-box"></div>
 
-  <!-- Biology Section -->
-  <div class="fig-section">
-    <h2>Mathematics in Biology – Fig 1: Leaf Structure</h2>
-    <div style="position:relative;">
-      <img src="leaf-diagram.jpg" alt="Leaf with math points" class="bio-image">
-      <div class="dot" style="top:40px; left:100px;" onclick="toggleFormula(this, 'Golden Ratio: (1 + √5) / 2')"></div>
-      <div class="dot" style="top:80px; left:200px;" onclick="toggleFormula(this, 'Parabola: y = ax²')"></div>
-    </div>
-  </div>
+  <h2>Mathematics in Biology — Fig. 1: Leaf Structure</h2>
+  <div id="leaf-graph" class="graph-box"></div>
 
-  <div class="fig-section">
-    <h2>Mathematics in Biology – Fig 2: DNA Structure</h2>
-    <div style="position:relative;">
-      <img src="dna-diagram.jpg" alt="DNA with math points" class="bio-image">
-      <div class="dot" style="top:60px; left:120px;" onclick="toggleFormula(this, 'Helix: x = cos(t), y = sin(t), z = t')"></div>
-      <div class="dot" style="top:150px; left:220px;" onclick="toggleFormula(this, 'Exponential: y = e^x')"></div>
-    </div>
-  </div>
+  <h2>Mathematics in Biology — Fig. 2: DNA Helix</h2>
+  <div id="dna-graph" class="graph-box"></div>
 
   <script>
+    // Main math input
     function plotAndPlay() {
       const expr = document.getElementById('funcInput').value.toLowerCase();
       const x = [], y = [];
@@ -121,7 +85,6 @@
 
     function playSoundFor(func) {
       let url = '';
-
       if (func.includes('sin')) {
         url = 'https://cdn.jsdelivr.net/gh/jackw01/sine-wave-tone/sine-440hz.mp3';
       } else if (func.includes('cos')) {
@@ -133,25 +96,73 @@
       } else {
         url = 'https://cdn.jsdelivr.net/gh/jackw01/sine-wave-tone/sine-330hz.mp3';
       }
-
       const audio = new Audio(url);
       audio.play().catch(() => {
         alert("Browser blocked autoplay. Click again or allow sound.");
       });
     }
 
-    function toggleFormula(dot, formula) {
-      let box = dot.nextElementSibling;
-      if (!box || !box.classList.contains('formula-box')) {
-        box = document.createElement('div');
-        box.className = 'formula-box';
-        box.innerText = formula;
-        dot.parentNode.insertBefore(box, dot.nextSibling);
-        box.style.top = (dot.offsetTop + 20) + 'px';
-        box.style.left = (dot.offsetLeft + 20) + 'px';
+    // Leaf Shape Plot (using a polar leaf-like parametric equation)
+    function drawLeafGraph() {
+      const t = [], x = [], y = [], text = [];
+      for (let i = 0; i <= Math.PI; i += 0.05) {
+        t.push(i);
+        const r = Math.sin(i) * Math.cos(i);
+        x.push(r * Math.cos(i));
+        y.push(r * Math.sin(i));
+        text.push('Equation: r = sin(t) * cos(t)');
       }
-      box.style.display = (box.style.display === 'none' || box.style.display === '') ? 'block' : 'none';
+
+      Plotly.newPlot('leaf-graph', [{
+        x: x,
+        y: y,
+        mode: 'markers',
+        marker: { color: '#39ff14', size: 8 },
+        text: text,
+        hoverinfo: 'text'
+      }], {
+        title: 'Leaf Equation Points',
+        plot_bgcolor: 'black',
+        paper_bgcolor: 'black',
+        font: { color: '#39ff14' }
+      });
     }
+
+    // DNA Shape Plot (simple helix with alternating dots)
+    function drawDNAGraph() {
+      const x = [], y = [], z = [], text = [];
+      for (let t = 0; t < 12.5; t += 0.1) {
+        x.push(Math.sin(t));
+        y.push(Math.cos(t));
+        z.push(t);
+        text.push('Helix: x=sin(t), y=cos(t), z=t');
+      }
+
+      Plotly.newPlot('dna-graph', [{
+        x: x,
+        y: y,
+        z: z,
+        mode: 'markers',
+        type: 'scatter3d',
+        marker: { size: 4, color: '#39ff14' },
+        text: text,
+        hoverinfo: 'text'
+      }], {
+        title: 'DNA Helix',
+        scene: {
+          xaxis: { color: '#39ff14' },
+          yaxis: { color: '#39ff14' },
+          zaxis: { color: '#39ff14' },
+          bgcolor: 'black'
+        },
+        paper_bgcolor: 'black',
+        font: { color: '#39ff14' }
+      });
+    }
+
+    // Draw both additional graphs
+    drawLeafGraph();
+    drawDNAGraph();
   </script>
 
 </body>
