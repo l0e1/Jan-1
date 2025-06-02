@@ -39,7 +39,7 @@
 
   <h1>Jan-1: Hear the Math</h1>
   <p><strong>Created by Ale Mustafa</strong></p>
-  <p><em>"Mathematics is like a music of reason — you just have to hear it."</em><br>– Inspired by Niels Bohr</p>
+  <p><em>"Mathematics is like a music of reason, you just have to hear it."</em><br>– Inspired by Niels Bohr</p>
   <p>This project explores the deep connection between mathematics and sound, allowing users to hear and see mathematical beauty in real-world patterns.</p>
 
   <hr>
@@ -50,10 +50,10 @@
   <button onclick="plotAndPlay()">Plot & Play</button>
   <div id="userGraph" class="graph"></div>
 
-  <h2>Mathematics in Biology – Fig. 1: Leaf Structure</h2>
+  <h2>Mathematics in Biology>>>Fig. 1: Leaf Structure</h2>
   <div id="leafGraph" class="graph"></div>
 
-  <h2>Mathematics in Biology – Fig. 2: DNA Helix</h2>
+  <h2>Mathematics in Biology>>>Fig. 2: DNA Helix</h2>
   <div id="dnaGraph" class="graph"></div>
 
   <script>
@@ -86,11 +86,11 @@
 
     function playSoundFor(expr) {
       let url = '';
-      if (expr.includes('sin')) url = 'https://cdn.jsdelivr.net/gh/jackw01/sine-wave-tone/sine-440hz.mp3';
-      else if (expr.includes('cos')) url = 'https://cdn.jsdelivr.net/gh/jackw01/sine-wave-tone/sine-880hz.mp3';
-      else if (expr.includes('tan')) url = 'https://cdn.jsdelivr.net/gh/jackw01/sine-wave-tone/square-440hz.mp3';
-      else if (expr.includes('^2')) url = 'https://cdn.jsdelivr.net/gh/jackw01/sine-wave-tone/sine-220hz.mp3';
-      else url = 'https://cdn.jsdelivr.net/gh/jackw01/sine-wave-tone/sine-330hz.mp3';
+      if (expr.includes('sin')) url = '[[https://freesound.org/people/IykqiC0/sounds/180075/]]';
+      else if (expr.includes('cos')) url = '[[https://freesound.org/people/Anton/sounds/330/]]';
+      else if (expr.includes('tan,^1,sqrt(),')) url = '[[https://freesound.org/people/IykqiC0/sounds/180075/]]';
+      else if (expr.includes('^2,^3,^4,^5,^6,^7,^8,')) url = '[[https://soundcloud.com/austin-hicks-285971365/sample-audio-graph-of-x2-from-0-to-5]]';
+      else url = '[[https://soundcloud.com/user-588235610/100hz-sine-wave]]';
 
       const audio = new Audio(url);
       audio.play().catch(() => {
