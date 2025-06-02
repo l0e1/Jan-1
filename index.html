@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
   <title>Jan-1: Math & Sound</title>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjs/11.11.0/math.min.js"></script>
   <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
@@ -27,6 +27,9 @@
       background-color: #39ff14;
       color: black;
     }
+    .graph-container {
+      margin-top: 40px;
+    }
     .graph-box {
       margin-top: 20px;
     }
@@ -36,8 +39,7 @@
 
   <h1>Jan-1: Hear the Math</h1>
   <p><strong>Created by Ale Mustafa</strong></p>
-  <p><em>"Mathematics is like a music of reason — you just have to hear it."</em><br>– (Inspired by Niels Bohr)</p>
-  <p>This project was created because math can be heard, not just seen. Jan-1 lets you feel it both ways.</p>
+  <p><em>"Mathematics is like a music of reason, you just have to hear it!"</em><br>– (Niels Bohr)</p>
 
   <hr>
 
@@ -48,14 +50,15 @@
 
   <div id="graph" class="graph-box"></div>
 
-  <h2>Mathematics in Biology — Fig. 1: Leaf Structure</h2>
-  <div id="leaf-graph" class="graph-box"></div>
+  <div class="graph-container">
+    <h2>Mathematics in Biology - Fig 1: Leaf</h2>
+    <div id="leafGraph" class="graph-box"></div>
 
-  <h2>Mathematics in Biology — Fig. 2: DNA Helix</h2>
-  <div id="dna-graph" class="graph-box"></div>
+    <h2>Mathematics in Biology - Fig 2: DNA Spiral</h2>
+    <div id="dnaGraph" class="graph-box"></div>
+  </div>
 
   <script>
-    // Main math input
     function plotAndPlay() {
       const expr = document.getElementById('funcInput').value.toLowerCase();
       const x = [], y = [];
@@ -85,6 +88,7 @@
 
     function playSoundFor(func) {
       let url = '';
+
       if (func.includes('sin')) {
         url = 'https://cdn.jsdelivr.net/gh/jackw01/sine-wave-tone/sine-440hz.mp3';
       } else if (func.includes('cos')) {
@@ -96,73 +100,58 @@
       } else {
         url = 'https://cdn.jsdelivr.net/gh/jackw01/sine-wave-tone/sine-330hz.mp3';
       }
+
       const audio = new Audio(url);
       audio.play().catch(() => {
         alert("Browser blocked autoplay. Click again or allow sound.");
       });
     }
 
-    // Leaf Shape Plot (using a polar leaf-like parametric equation)
-    function drawLeafGraph() {
-      const t = [], x = [], y = [], text = [];
-      for (let i = 0; i <= Math.PI; i += 0.05) {
-        t.push(i);
-        const r = Math.sin(i) * Math.cos(i);
-        x.push(r * Math.cos(i));
-        y.push(r * Math.sin(i));
-        text.push('Equation: r = sin(t) * cos(t)');
-      }
+    // Biology Fig 1: Leaf Structure
+    const leafX = [1, 2, 3, 4, 5];
+    const leafY = [1, 4, 2, 5, 3];
+    Plotly.newPlot('leafGraph', [{
+      x: leafX,
+      y: leafY,
+      mode: 'markers',
+      type: 'scatter',
+      text: [
+        'Stomatal pattern → sin(x)',
+        'Vein curve → x^2',
+        'Tip curvature → tan(x)',
+        'Growth edge → |x|',
+        'Sunlight response → cos(x)'
+      ],
+      hoverinfo: 'text',
+      marker: { size: 12, color: '#39ff14' }
+    }], {
+      title: 'Leaf Patterns as Functions',
+      plot_bgcolor: 'black',
+      paper_bgcolor: 'black',
+      font: { color: '#39ff14' }
+    });
 
-      Plotly.newPlot('leaf-graph', [{
-        x: x,
-        y: y,
-        mode: 'markers',
-        marker: { color: '#39ff14', size: 8 },
-        text: text,
-        hoverinfo: 'text'
-      }], {
-        title: 'Leaf Equation Points',
-        plot_bgcolor: 'black',
-        paper_bgcolor: 'black',
-        font: { color: '#39ff14' }
-      });
+    // Biology Fig 2: DNA Double Helix (simplified)
+    const dnaTheta = [];
+    const dnaX = [], dnaY = [];
+    for (let t = 0; t < 12.6; t += 0.1) {
+      dnaTheta.push(t);
+      dnaX.push(Math.cos(t));
+      dnaY.push(Math.sin(t) + t * 0.05);
     }
 
-    // DNA Shape Plot (simple helix with alternating dots)
-    function drawDNAGraph() {
-      const x = [], y = [], z = [], text = [];
-      for (let t = 0; t < 12.5; t += 0.1) {
-        x.push(Math.sin(t));
-        y.push(Math.cos(t));
-        z.push(t);
-        text.push('Helix: x=sin(t), y=cos(t), z=t');
-      }
-
-      Plotly.newPlot('dna-graph', [{
-        x: x,
-        y: y,
-        z: z,
-        mode: 'markers',
-        type: 'scatter3d',
-        marker: { size: 4, color: '#39ff14' },
-        text: text,
-        hoverinfo: 'text'
-      }], {
-        title: 'DNA Helix',
-        scene: {
-          xaxis: { color: '#39ff14' },
-          yaxis: { color: '#39ff14' },
-          zaxis: { color: '#39ff14' },
-          bgcolor: 'black'
-        },
-        paper_bgcolor: 'black',
-        font: { color: '#39ff14' }
-      });
-    }
-
-    // Draw both additional graphs
-    drawLeafGraph();
-    drawDNAGraph();
+    Plotly.newPlot('dnaGraph', [{
+      x: dnaX,
+      y: dnaY,
+      mode: 'lines',
+      name: 'DNA Spiral',
+      line: { color: '#39ff14' }
+    }], {
+      title: 'DNA Spiral Path',
+      plot_bgcolor: 'black',
+      paper_bgcolor: 'black',
+      font: { color: '#39ff14' }
+    });
   </script>
 
 </body>
