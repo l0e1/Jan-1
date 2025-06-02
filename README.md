@@ -1,7 +1,8 @@
 # Jan-1
-**Created by Ale Mustafa**  
+
+*Created by Ale Mustafa*  
 "Mathematics is like a music of reason — you just have to hear it."
-— (Inspired by Niels Bohr)
+"Inspired by Niels Bohr"
 :)
 ## About
 
