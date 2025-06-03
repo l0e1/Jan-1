@@ -2,9 +2,9 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Jan-1: Hear the Math</title>
+  <title>Jan-1: Math & Sound</title>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjs/11.11.0/math.min.js"></script>
-  <script src="https://cdn.plot.ly/plotly-2.32.0.min.js"></script>
+  <script src="https://cdn.plot.ly/plotly-2.30.0.min.js"></script>
   <style>
     body {
       background-color: black;
@@ -24,8 +24,13 @@
       background-color: #39ff14;
       color: black;
     }
-    .graph-section {
-      margin-top: 30px;
+    h1, h2 {
+      color: #39ff14;
+    }
+    #graph, #leafGraph, #dnaGraph {
+      width: 600px;
+      height: 400px;
+      margin-bottom: 20px;
     }
   </style>
 </head>
@@ -33,26 +38,33 @@
 
   <h1>Jan-1: Hear the Math</h1>
   <p><strong>Created by Ale Mustafa</strong></p>
-  <p><em>"Mathematics is like a music of reason you just have to hear it!"</em><br> –Niels Bohr</p>
-
+  <p><em>"Mathematics is like a music of reason — you just have to hear it."</em></p>
   <hr>
 
-  <p><strong>Type a function like</strong> <code>sin(x)</code>, <code>cos(x)</code>, <code>tan(x)</code>, <code>x^2</code>, <code>abs(x)</code></p>
-  <p><strong>Note:</strong> Please use parentheses like <code>()</code> (e.g., <code>sin(x)</code> not <code>sinx</code>).</p>
-
+  <h2>Plot Any Math Function</h2>
+  <p><strong>Note:</strong> Please use parentheses for clarity, e.g., <code>sin(x)</code>, <code>(x^2 + 1)</code>.</p>
   <input id="funcInput" type="text" value="sin(x)" />
   <button onclick="plotAndPlay()">Plot & Play</button>
   <button onclick="stopSound()">Stop Sound</button>
+  <div id="graph"></div>
 
-  <div id="mainGraph" class="graph-section"></div>
+  <h2>Mathematics in Biology — Fig. 1: Leaf Pattern</h2>
+  <div id="leafGraph"></div>
+  <p style="max-width: 600px;">
+    This graph visualizes the polar equation <code>r(θ) = sin(θ) × cos(θ)</code>, rendered in Cartesian coordinates.
+    It produces a leaf-like lobed shape, commonly found in plant morphology. Each point is generated based on angle θ,
+    using <code>x = r × cos(θ)</code> and <code>y = r × sin(θ)</code>.
+    This demonstrates how polar functions can model natural symmetry in leaves and petals.
+  </p>
 
-  <h2>Mathematics in Biology</h2>
-
-  <h3>Fig. 1 – Leaf Pattern (Polar Graph)</h3>
-  <div id="leafGraph" class="graph-section"></div>
-
-  <h3>Fig. 2 – DNA Double Helix</h3>
-  <div id="dnaGraph" class="graph-section"></div>
+  <h2>Mathematics in Biology — Fig. 2: DNA Helix</h2>
+  <div id="dnaGraph"></div>
+  <p style="max-width: 600px;">
+    This graph shows a 3D mathematical helix, using the parametric equations:
+    <code>x = sin(t)</code>, <code>y = cos(t)</code>, <code>z = 0.05 × t</code>.
+    As the parameter <code>t</code> increases, the points trace a spiral in 3D space — mimicking the structure
+    of a DNA strand. This model represents a single helix; a future extension can add a second strand for full biological accuracy.
+  </p>
 
   <script>
     let currentAudio = null;
@@ -60,7 +72,6 @@
     function plotAndPlay() {
       const expr = document.getElementById('funcInput').value.toLowerCase();
       const x = [], y = [];
-
       for (let i = -10; i <= 10; i += 0.1) {
         x.push(i);
         try {
@@ -70,7 +81,7 @@
         }
       }
 
-      Plotly.newPlot('mainGraph', [{
+      Plotly.newPlot('graph', [{
         x: x,
         y: y,
         mode: 'lines',
@@ -86,16 +97,15 @@
     }
 
     function playSoundFor(func) {
-      let url = '';
+      stopSound(); // stop previous
 
+      let url = 'sounds/default.mp3';
       if (func.includes('sin')) url = 'sounds/sin.mp3';
       else if (func.includes('cos')) url = 'sounds/cos.mp3';
       else if (func.includes('tan')) url = 'sounds/tan.mp3';
       else if (func.includes('^2')) url = 'sounds/square.mp3';
-      else if (func.includes('abs') || func.includes('|')) url = 'sounds/abs.mp3';
-      else url = 'sounds/default.mp3';
+      else if (func.includes('abs') || func.includes('|x|')) url = 'sounds/abs.mp3';
 
-      stopSound(); // Stop any currently playing sound
       currentAudio = new Audio(url);
       currentAudio.play().catch(() => {
         alert("Browser blocked autoplay. Click again or allow sound.");
@@ -110,59 +120,55 @@
       }
     }
 
+    // Leaf Plot
     function plotLeaf() {
-      const r = [], theta = [], x = [], y = [];
-
-      for (let i = 0; i < 360; i++) {
-        const t = i * Math.PI / 180;
-        const val = Math.sin(t) * Math.cos(t);
-        r.push(val);
-        theta.push(i);
-        x.push(val * Math.cos(t));
-        y.push(val * Math.sin(t));
+      const t = [], x = [], y = [];
+      for (let i = 0; i <= Math.PI * 2; i += 0.01) {
+        const r = Math.sin(i) * Math.cos(i);
+        t.push(i);
+        x.push(r * Math.cos(i));
+        y.push(r * Math.sin(i));
       }
 
       Plotly.newPlot('leafGraph', [{
         x: x,
         y: y,
-        mode: 'markers',
-        type: 'scatter',
-        marker: { color: '#39ff14' },
-        text: theta.map(t => `r = sin(θ) * cos(θ)<br>θ = ${t.toFixed(1)}°`),
-        hoverinfo: 'text'
+        mode: 'lines',
+        name: 'Leaf Equation'
       }], {
-        title: 'Fig. 1: Leaf Graph (r = sin(θ)·cos(θ))',
+        title: 'r(θ) = sin(θ) × cos(θ)',
         plot_bgcolor: 'black',
         paper_bgcolor: 'black',
         font: { color: '#39ff14' }
       });
     }
 
+    // DNA Plot
     function plotDNA() {
-      const x = [], y = [], z = [], labels = [];
-
-      for (let t = 0; t <= 20 * Math.PI; t += 0.1) {
-        x.push(Math.sin(t));
-        y.push(Math.cos(t));
-        z.push(t * 0.05);
-        labels.push(`x = sin(t)<br>y = cos(t)<br>z = ${ (t * 0.05).toFixed(2) }`);
+      const t = [], x = [], y = [], z = [];
+      for (let i = 0; i <= 20 * Math.PI; i += 0.1) {
+        t.push(i);
+        x.push(Math.sin(i));
+        y.push(Math.cos(i));
+        z.push(0.05 * i);
       }
 
       Plotly.newPlot('dnaGraph', [{
+        type: 'scatter3d',
+        mode: 'lines',
         x: x,
         y: y,
         z: z,
-        mode: 'markers',
-        type: 'scatter3d',
-        marker: { color: '#39ff14', size: 2 },
-        text: labels,
-        hoverinfo: 'text'
+        line: {
+          width: 4,
+          color: '#39ff14'
+        }
       }], {
-        title: 'Fig. 2: DNA Helix (x = sin(t), y = cos(t), z = t·0.05)',
+        title: 'DNA Helix: x = sin(t), y = cos(t), z = 0.05×t',
         scene: {
-          xaxis: { color: '#39ff14' },
-          yaxis: { color: '#39ff14' },
-          zaxis: { color: '#39ff14' },
+          xaxis: { title: 'x' },
+          yaxis: { title: 'y' },
+          zaxis: { title: 'z' },
           bgcolor: 'black'
         },
         paper_bgcolor: 'black',
@@ -170,10 +176,9 @@
       });
     }
 
-    // Draw biology graphs on load
+    // Plot on load
     plotLeaf();
     plotDNA();
   </script>
-
 </body>
 </html>
