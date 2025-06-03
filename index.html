@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <title>Jan-1: Math & Sound</title>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjs/11.11.0/math.min.js"></script>
-  <script src="https://cdn.plot.ly/plotly-2.30.0.min.js"></script>
+  <script src="https://cdn.plot.ly/plotly-2.27.0.min.js"></script>
   <style>
     body {
       background-color: black;
@@ -17,8 +17,8 @@
       border: 1px solid #39ff14;
       color: #39ff14;
       padding: 8px;
-      margin: 5px 0;
       font-size: 16px;
+      margin: 5px;
     }
     button:hover {
       background-color: #39ff14;
@@ -35,11 +35,12 @@
 
   <h1>Jan-1: Hear the Math</h1>
   <p><strong>Created by Ale Mustafa</strong></p>
-  <p><em>"Mathematics is like a music of reason, you just have to hear it."</em><br> by Niels Bohr</p>
+  <p><em>"Mathematics is like a music of reason, you just have to hear it--enjoy!."</em><br> Inspired by Niels Bohr!-- (please do note that this site is containing basic math functions and their graphs as well as the sounds)</p>
 
   <hr>
 
-  <p><strong>Type a function:</strong> <code>sin(x)</code>, <code>cos(x)</code>, <code>tan(x)</code>, <code>x^2</code>, <code>abs(x)</code>, etc.</p>
+  <p><strong>Type a function:</strong> <code>sin(x)</code>, <code>cos(x)</code>, <code>tan(x)</code>, <code>x^2</code>, <code>abs(x)</code></p>
+
   <input id="funcInput" type="text" value="sin(x)" />
   <button onclick="plotAndPlay()">Plot & Play</button>
 
@@ -75,20 +76,20 @@
     }
 
     function playSoundFor(func) {
-      let url = "";
+      let url = '';
 
-      if (func.includes("sin")) {
-        url = "sounds/sin.mp3";
-      } else if (func.includes("cos")) {
-        url = "sounds/cos.mp3";
-      } else if (func.includes("tan")) {
-        url = "sounds/tan.mp3";
-      } else if (func.includes("^2")) {
-        url = "sounds/square.mp3";
-      } else if (func.includes("abs")) {
-        url = "sounds/abs.mp3";
+      if (func.includes('sin')) {
+        url = 'sounds/sin.mp3';
+      } else if (func.includes('cos')) {
+        url = 'sounds/cos.mp3';
+      } else if (func.includes('tan')) {
+        url = 'sounds/tan.mp3';
+      } else if (func.includes('^2')) {
+        url = 'sounds/square.mp3';
+      } else if (func.includes('abs') || func.includes('|x|')) {
+        url = 'sounds/abs.mp3';
       } else {
-        url = "sounds/default.mp3";
+        url = 'sounds/default.mp3';
       }
 
       const audio = new Audio(url);
