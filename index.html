@@ -2,9 +2,9 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Jan-1: Math & Sound</title>
+  <title>Jan-1: Hear the Math</title>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjs/11.11.0/math.min.js"></script>
-  <script src="https://cdn.plot.ly/plotly-2.27.0.min.js"></script>
+  <script src="https://cdn.plot.ly/plotly-2.32.0.min.js"></script>
   <style>
     body {
       background-color: black;
@@ -12,7 +12,7 @@
       font-family: 'Courier New', Courier, monospace;
       padding: 20px;
     }
-    input, button {
+    button, input {
       background-color: black;
       border: 1px solid #39ff14;
       color: #39ff14;
@@ -24,10 +24,8 @@
       background-color: #39ff14;
       color: black;
     }
-    #graph {
-      width: 600px;
-      height: 400px;
-      margin-top: 20px;
+    .graph-section {
+      margin-top: 30px;
     }
   </style>
 </head>
@@ -35,18 +33,30 @@
 
   <h1>Jan-1: Hear the Math</h1>
   <p><strong>Created by Ale Mustafa</strong></p>
-  <p><em>"Mathematics is like a music of reason, you just have to hear it--enjoy!."</em><br> Inspired by Niels Bohr!-- (please do note that this site is containing basic math functions and their graphs as well as the sounds)</p>
+  <p><em>"Mathematics is like a music of reason you just have to hear it!"</em><br> –Niels Bohr</p>
 
   <hr>
 
-  <p><strong>Type a function:</strong> <code>sin(x)</code>, <code>cos(x)</code>, <code>tan(x)</code>, <code>x^2</code>, <code>abs(x)</code></p>
+  <p><strong>Type a function like</strong> <code>sin(x)</code>, <code>cos(x)</code>, <code>tan(x)</code>, <code>x^2</code>, <code>abs(x)</code></p>
+  <p><strong>Note:</strong> Please use parentheses like <code>()</code> (e.g., <code>sin(x)</code> not <code>sinx</code>).</p>
 
   <input id="funcInput" type="text" value="sin(x)" />
   <button onclick="plotAndPlay()">Plot & Play</button>
+  <button onclick="stopSound()">Stop Sound</button>
 
-  <div id="graph"></div>
+  <div id="mainGraph" class="graph-section"></div>
+
+  <h2>Mathematics in Biology</h2>
+
+  <h3>Fig. 1 – Leaf Pattern (Polar Graph)</h3>
+  <div id="leafGraph" class="graph-section"></div>
+
+  <h3>Fig. 2 – DNA Double Helix</h3>
+  <div id="dnaGraph" class="graph-section"></div>
 
   <script>
+    let currentAudio = null;
+
     function plotAndPlay() {
       const expr = document.getElementById('funcInput').value.toLowerCase();
       const x = [], y = [];
@@ -60,7 +70,7 @@
         }
       }
 
-      Plotly.newPlot('graph', [{
+      Plotly.newPlot('mainGraph', [{
         x: x,
         y: y,
         mode: 'lines',
@@ -78,25 +88,91 @@
     function playSoundFor(func) {
       let url = '';
 
-      if (func.includes('sin')) {
-        url = 'sounds/sin.mp3';
-      } else if (func.includes('cos')) {
-        url = 'sounds/cos.mp3';
-      } else if (func.includes('tan')) {
-        url = 'sounds/tan.mp3';
-      } else if (func.includes('^2')) {
-        url = 'sounds/square.mp3';
-      } else if (func.includes('abs') || func.includes('|x|')) {
-        url = 'sounds/abs.mp3';
-      } else {
-        url = 'sounds/default.mp3';
-      }
+      if (func.includes('sin')) url = 'sounds/sin.mp3';
+      else if (func.includes('cos')) url = 'sounds/cos.mp3';
+      else if (func.includes('tan')) url = 'sounds/tan.mp3';
+      else if (func.includes('^2')) url = 'sounds/square.mp3';
+      else if (func.includes('abs') || func.includes('|')) url = 'sounds/abs.mp3';
+      else url = 'sounds/default.mp3';
 
-      const audio = new Audio(url);
-      audio.play().catch(() => {
+      stopSound(); // Stop any currently playing sound
+      currentAudio = new Audio(url);
+      currentAudio.play().catch(() => {
         alert("Browser blocked autoplay. Click again or allow sound.");
       });
     }
+
+    function stopSound() {
+      if (currentAudio) {
+        currentAudio.pause();
+        currentAudio.currentTime = 0;
+        currentAudio = null;
+      }
+    }
+
+    function plotLeaf() {
+      const r = [], theta = [], x = [], y = [];
+
+      for (let i = 0; i < 360; i++) {
+        const t = i * Math.PI / 180;
+        const val = Math.sin(t) * Math.cos(t);
+        r.push(val);
+        theta.push(i);
+        x.push(val * Math.cos(t));
+        y.push(val * Math.sin(t));
+      }
+
+      Plotly.newPlot('leafGraph', [{
+        x: x,
+        y: y,
+        mode: 'markers',
+        type: 'scatter',
+        marker: { color: '#39ff14' },
+        text: theta.map(t => `r = sin(θ) * cos(θ)<br>θ = ${t.toFixed(1)}°`),
+        hoverinfo: 'text'
+      }], {
+        title: 'Fig. 1: Leaf Graph (r = sin(θ)·cos(θ))',
+        plot_bgcolor: 'black',
+        paper_bgcolor: 'black',
+        font: { color: '#39ff14' }
+      });
+    }
+
+    function plotDNA() {
+      const x = [], y = [], z = [], labels = [];
+
+      for (let t = 0; t <= 20 * Math.PI; t += 0.1) {
+        x.push(Math.sin(t));
+        y.push(Math.cos(t));
+        z.push(t * 0.05);
+        labels.push(`x = sin(t)<br>y = cos(t)<br>z = ${ (t * 0.05).toFixed(2) }`);
+      }
+
+      Plotly.newPlot('dnaGraph', [{
+        x: x,
+        y: y,
+        z: z,
+        mode: 'markers',
+        type: 'scatter3d',
+        marker: { color: '#39ff14', size: 2 },
+        text: labels,
+        hoverinfo: 'text'
+      }], {
+        title: 'Fig. 2: DNA Helix (x = sin(t), y = cos(t), z = t·0.05)',
+        scene: {
+          xaxis: { color: '#39ff14' },
+          yaxis: { color: '#39ff14' },
+          zaxis: { color: '#39ff14' },
+          bgcolor: 'black'
+        },
+        paper_bgcolor: 'black',
+        font: { color: '#39ff14' }
+      });
+    }
+
+    // Draw biology graphs on load
+    plotLeaf();
+    plotDNA();
   </script>
 
 </body>
