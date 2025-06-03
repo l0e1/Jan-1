@@ -1,29 +1,38 @@
-# Jan-1: Hear The Math.
+# Jan-1: Hear The Math
+*Author: Ale Mustafa*
 
-*Created by Ale Mustafa.
-:) :) :) 
-> "Mathematics is like a music of reason, you just have to hear it."  by Niels Bohr!
+## Purpose
+Jan-1 is an educational web application designed to demonstrate the relationship between mathematical functions, their graphical representation, and corresponding audio tones. It also includes two biology-inspired visualizations—a leaf pattern and a DNA helix, showing how mathematical equations manifest in natural forms. The goal is to provide a free, accessible tool for students, teachers, and researchers who wish to explore or demonstrate these concepts in classrooms, laboratories, or personal study.
 
-**Jan-1** is an interactive website demonstrating the connection between mathematics, sound, and biology.
+## Tools & Technologies
 
-## Features
-- Graph your own math functions and hear their sound.
-  
-- Explore biological forms (leaf, DNA) plotted using real math equations.
- 
-- Each biological figure reveals its equation and logic.
+- **HTML5 & CSS3**  
+- **JavaScript**  
+  - [Math.js](https://mathjs.org/) for evaluating user (input) expressions  
+  - [Plotly.js](https://plotly.com/javascript/) for interactive graphs  
+- **Audio Playback** via the HTML Audio API. 
+- **GitHub Pages** for hosting.  
 
-## Technologies/tools that are used here:
-- HTML, CSS, JavaScript.
-- ((Plotly.js)) for graphs.
-- ((math.js)) for evaluating functions.
-- Audio playback with simple MP3 triggers.
+All dependencies are open-source and free to use.
 
-## Hosting? 
-Host directly using GitHub Pages, see the GitHub deployment guide for setup!
-## Licence:
-This project is presented under the MIT licence.
-## LINK:
-Jan-1 is availabe at:[[https://l0e1.github.io/Jan-1/]] hosted by GitHub. 
+## Hosted By
 
-> Thanks for reaching this tiny dot(.) 
+This project is hosted on GitHub Pages at:  
+
+
+## License
+
+This project is released under the [MIT License](https://opensource.org/licenses/MIT).  
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the “Software”), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, subject to the following conditions:
+- The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.  
+- THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED.
+
+## Who Can Use
+
+- **Students** seeking to visualize and hear mathematical functions:)  
+- **Teachers** demonstrating connections between math, biology, and sound :) 
+- **Researchers** exploring educational tools for STEM instruction:)  
+- **Anyone** interested in interactive, free, open-source educational software:)
+
+© 2025 Ale Mustafa. Hosted by GitHub. All rights reserved under MIT License.
+
