@@ -2,7 +2,7 @@
 *Author: Ale Mustafa*
 
 ## Purpose
-Jan-1 is an educational web application designed to demonstrate the relationship between mathematical functions, their graphical representation, and corresponding audio tones. It also includes two biology-inspired visualizations—a leaf pattern and a DNA helix, showing how mathematical equations manifest in natural forms. The goal is to provide a free, accessible tool for students, teachers, and researchers who wish to explore or demonstrate these concepts in classrooms, laboratories, or personal study.
+Jan-1 is an educational web application designed to demonstrate the relationship between mathematical functions, their graphical representation, and corresponding audio tones. It also includes two biology inspired visualizations a leaf pattern and a DNA helix, showing how mathematical equations manifest in natural forms. The goal is to provide a free, accessible tool for students, teachers, and researchers who wish to explore or demonstrate these concepts in classrooms, laboratories, or personal study.
 
 ## Tools & Technologies
 
