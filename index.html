@@ -18,7 +18,7 @@
       color: #39ff14;
       padding: 8px;
       font-size: 16px;
-      margin: 5px;
+      margin: 5px 5px 20px 0;
     }
     button:hover {
       background-color: #39ff14;
@@ -27,10 +27,17 @@
     h1, h2 {
       color: #39ff14;
     }
-    #graph, #leafGraph, #dnaGraph {
-      width: 600px;
+    .plot {
+      width: 100%;
+      max-width: 700px;
       height: 400px;
       margin-bottom: 20px;
+    }
+    .caption {
+      max-width: 700px;
+      font-size: 14px;
+      line-height: 1.5;
+      margin-bottom: 40px;
     }
   </style>
 </head>
@@ -38,33 +45,30 @@
 
   <h1>Jan-1: Hear the Math</h1>
   <p><strong>Created by Ale Mustafa</strong></p>
-  <p><em>"Mathematics is like a music of reason you just have to hear it!"</em></p>
+  <p><em>"Mathematics is like a music of reason — you just have to hear it."</em></p>
   <hr>
 
-  <h2>Plot Any Math Function</h2>
-  <p><strong>Note:</strong> Please use parentheses for clarity, e.g., <code>sin(x)</code>, <code>(x^2 + 1)</code>.</p>
+  <h2>Function Plotter + Sound</h2>
+  <p><strong>Note:</strong> Use parentheses to avoid confusion. For example, use <code>sin(x)</code> not <code>sinx</code>, and <code>(x^2 + 1)</code> not <code>x^2 + 1</code>.</p>
   <input id="funcInput" type="text" value="sin(x)" />
   <button onclick="plotAndPlay()">Plot & Play</button>
   <button onclick="stopSound()">Stop Sound</button>
-  <div id="graph"></div>
+  <div id="graph" class="plot"></div>
 
-  <h2>Mathematics in Biology — Fig. 1: Leaf Pattern</h2>
-  <div id="leafGraph"></div>
-  <p style="max-width: 600px;">
-    This graph visualizes the polar equation <code>r(θ) = sin(θ) × cos(θ)</code>, rendered in Cartesian coordinates.
-    It produces a leaf-like lobed shape, commonly found in plant morphology. Each point is generated based on angle θ,
-    using <code>x = r × cos(θ)</code> and <code>y = r × sin(θ)</code>.
-    This demonstrates how polar functions can model natural symmetry in leaves and petals.
-  </p>
+  <h2>Mathematics in Biology – Fig. 1: Leaf Curve</h2>
+  <div id="leafGraph" class="plot"></div>
+  <div class="caption">
+    This graph uses the polar equation <code>r(θ) = sin(θ) × cos(θ)</code>, plotted as <code>x = r cos(θ)</code> and <code>y = r sin(θ)</code>.
+    The shape resembles a natural leaf lobe, showcasing how polar math functions can model organic forms found in nature like leaves, flowers, and shells.
+  </div>
 
-  <h2>Mathematics in Biology — Fig. 2: DNA Helix</h2>
-  <div id="dnaGraph"></div>
-  <p style="max-width: 600px;">
-    This graph shows a 3D mathematical helix, using the parametric equations:
+  <h2>Mathematics in Biology – Fig. 2: DNA Helix</h2>
+  <div id="dnaGraph" class="plot"></div>
+  <div class="caption">
+    This 3D plot shows a single helix using parametric equations:
     <code>x = sin(t)</code>, <code>y = cos(t)</code>, <code>z = 0.05 × t</code>.
-    As the parameter <code>t</code> increases, the points trace a spiral in 3D space — mimicking the structure
-    of a DNA strand. This model represents a single helix; a future extension can add a second strand for full biological accuracy.
-  </p>
+    It visually resembles a DNA strand. With added detail, this can be extended to a full double-helix structure as seen in biology.
+  </div>
 
   <script>
     let currentAudio = null;
@@ -96,10 +100,18 @@
       playSoundFor(expr);
     }
 
+    function stopSound() {
+      if (currentAudio) {
+        currentAudio.pause();
+        currentAudio.currentTime = 0;
+        currentAudio = null;
+      }
+    }
+
     function playSoundFor(func) {
       stopSound(); // stop previous
-
       let url = 'sounds/default.mp3';
+
       if (func.includes('sin')) url = 'sounds/sin.mp3';
       else if (func.includes('cos')) url = 'sounds/cos.mp3';
       else if (func.includes('tan')) url = 'sounds/tan.mp3';
@@ -112,20 +124,10 @@
       });
     }
 
-    function stopSound() {
-      if (currentAudio) {
-        currentAudio.pause();
-        currentAudio.currentTime = 0;
-        currentAudio = null;
-      }
-    }
-
-    // Leaf Plot
     function plotLeaf() {
       const t = [], x = [], y = [];
       for (let i = 0; i <= Math.PI * 2; i += 0.01) {
         const r = Math.sin(i) * Math.cos(i);
-        t.push(i);
         x.push(r * Math.cos(i));
         y.push(r * Math.sin(i));
       }
@@ -143,11 +145,9 @@
       });
     }
 
-    // DNA Plot
     function plotDNA() {
       const t = [], x = [], y = [], z = [];
       for (let i = 0; i <= 20 * Math.PI; i += 0.1) {
-        t.push(i);
         x.push(Math.sin(i));
         y.push(Math.cos(i));
         z.push(0.05 * i);
@@ -164,7 +164,7 @@
           color: '#39ff14'
         }
       }], {
-        title: 'DNA Helix: x = sin(t), y = cos(t), z = 0.05×t',
+        title: 'DNA Helix',
         scene: {
           xaxis: { title: 'x' },
           yaxis: { title: 'y' },
@@ -176,9 +176,9 @@
       });
     }
 
-    // Plot on load
     plotLeaf();
     plotDNA();
   </script>
+
 </body>
 </html>
