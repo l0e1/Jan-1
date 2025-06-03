@@ -12,21 +12,21 @@
       font-family: 'Courier New', Courier, monospace;
       padding: 20px;
     }
-    button, input {
+    input, button {
       background-color: black;
       border: 1px solid #39ff14;
       color: #39ff14;
       padding: 8px;
+      margin: 5px 0;
       font-size: 16px;
-      margin: 5px;
     }
     button:hover {
       background-color: #39ff14;
       color: black;
     }
     #graph {
-      width: 100%;
-      height: 500px;
+      width: 600px;
+      height: 400px;
       margin-top: 20px;
     }
   </style>
@@ -35,12 +35,11 @@
 
   <h1>Jan-1: Hear the Math</h1>
   <p><strong>Created by Ale Mustafa</strong></p>
-  <p><em>"Mathematics is like a music of reason, you just have to hear it."</em><br> by Niels Bohr</p>
+  <p><em>"Mathematics is like a music of reason — you just have to hear it."</em><br>– Inspired by Niels Bohr</p>
 
   <hr>
 
-  <p><strong>Type a function:</strong> <code>sin(x)</code>, <code>cos(x)</code>, <code>tan(x)</code>, <code>x^2</code>, etc.</p>
-
+  <p><strong>Type a function:</strong> <code>sin(x)</code>, <code>cos(x)</code>, <code>tan(x)</code>, <code>x^2</code>, <code>abs(x)</code>, etc.</p>
   <input id="funcInput" type="text" value="sin(x)" />
   <button onclick="plotAndPlay()">Plot & Play</button>
 
@@ -50,6 +49,7 @@
     function plotAndPlay() {
       const expr = document.getElementById('funcInput').value.toLowerCase();
       const x = [], y = [];
+
       for (let i = -10; i <= 10; i += 0.1) {
         x.push(i);
         try {
@@ -77,17 +77,19 @@
     function playSoundFor(func) {
       let url = "";
 
-      if (func.includes('sin')) url = "https://cdn.jsdelivr.net/gh/jackw01/sine-wave-tone/sine-440hz.mp3";
-      else if (func.includes('cos')) url = "https://cdn.jsdelivr.net/gh/jackw01/sine-wave-tone/sine-880hz.mp3";
-      else if (func.includes('tan')) url = "https://cdn.jsdelivr.net/gh/jackw01/sine-wave-tone/square-440hz.mp3";
-      else if (func.includes('^2')) url = "https://cdn.jsdelivr.net/gh/jackw01/sine-wave-tone/sine-220hz.mp3";
-      else if (func.includes('^3')) url = "https://cdn.jsdelivr.net/gh/jackw01/sine-wave-tone/saw-440hz.mp3";
-      else if (func.includes('^6')) url = "https://cdn.jsdelivr.net/gh/jackw01/sine-wave-tone/triangle-440hz.mp3";
-      else if (func.includes('sqrt')) url = "https://cdn.jsdelivr.net/gh/jackw01/sine-wave-tone/sine-550hz.mp3";
-      else if (func.includes('|x^7|')) url = "https://cdn.jsdelivr.net/gh/jackw01/sine-wave-tone/sine-600hz.mp3";
-      else if (func.includes('|x^2/x^4|')) url = "https://cdn.jsdelivr.net/gh/jackw01/sine-wave-tone/sine-300hz.mp3";
-      else if (func.includes('x')) url = "https://cdn.jsdelivr.net/gh/jackw01/sine-wave-tone/sine-500hz.mp3";
-      else url = "https://cdn.jsdelivr.net/gh/jackw01/sine-wave-tone/sine-330hz.mp3";
+      if (func.includes("sin")) {
+        url = "sounds/sin.mp3";
+      } else if (func.includes("cos")) {
+        url = "sounds/cos.mp3";
+      } else if (func.includes("tan")) {
+        url = "sounds/tan.mp3";
+      } else if (func.includes("^2")) {
+        url = "sounds/square.mp3";
+      } else if (func.includes("abs")) {
+        url = "sounds/abs.mp3";
+      } else {
+        url = "sounds/default.mp3";
+      }
 
       const audio = new Audio(url);
       audio.play().catch(() => {
