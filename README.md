@@ -15,7 +15,7 @@ Jan-1 is an educational web application designed to demonstrate the relationship
 
 All dependencies are open-source and free to use.
 
-## Hosted By
+## Hosted By & where to open:
 
 This project is hosted on GitHub Pages at:  
 [[https://l0e1.github.io/Jan-1/]]
