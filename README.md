@@ -15,11 +15,6 @@ Jan-1 is an educational web application designed to demonstrate the relationship
 
 All dependencies are open-source and free to use.
 
-## Hosted By & where to open:
-
-This project is hosted on GitHub Pages at:  
-[[file:///C:/Users/Surface/Downloads/index.html]]
-
 ## License
 
 This project is released under the [MIT License](https://opensource.org/licenses/MIT).  
